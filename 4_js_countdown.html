@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="content-type" name="viewport" content="width=device-width, initial-scale=1 text/html; charset=utf-8"/>
+<style>
+    .container {
+        text-align: center;
+        font-size: 60px;
+        margin-top: 0px;
+    }
+    #button {
+        text-align: center;
+        font-size: 60px;
+        margin-top: -10px;
+    }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h3>Hitung Mundur</h3>
+    <p id="timer_text">00 : 00</p>
+    
+    <div id="button">
+        <select id="minutes">
+            <option value="0">Pilih Menit</option>
+            <option value="3">3 Menit</option>
+            <option value="5">5 Menit</option>
+            <option value="7">7 Menit</option>
+        </select>
+        <button onclick="start()" id="btn_start" type="submit">Start</button>
+    </div>
+</div>
+
+
+<script>
+
+function start() {
+    var minute = document.getElementById("minutes").value;
+    if(minute != 0) {
+        document.getElementById("button").style.display = "none";
+        
+        console.log(document.getElementById("minutes").value);
+        var now = new Date();
+        now.setMinutes(now.getMinutes() + parseInt(minute)); // add 3 minutes from now
+        var countDownDate = new Date(now); 
+        var timer = setInterval(function() {
+
+            var now = new Date().getTime();
+            
+            var distance = countDownDate - now;
+
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                
+            document.getElementById("timer_text").innerHTML = "0"+minutes + " : " + seconds;
+                
+            if (distance < 0) {
+                clearInterval(timer);
+                document.getElementById("button").style.display ="block";
+                document.getElementById("timer_text").innerHTML = "Finished";
+                alert("countdown finished");
+            }
+        }, 1000);
+    } else {
+        alert("please select a minute");
+    }
+}
+
+</script>
+
+</body>
+</html>
